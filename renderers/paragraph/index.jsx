@@ -24,13 +24,13 @@ const ParagraphOutput = ({ data, style, classNames, config }) => {
   if (!config || typeof config !== 'object') config = {};
   if (!classNames || typeof classNames !== 'string') classNames = '';
 
-  const paragraphStyle = config.disableDefaultStyle ? style : { ...paragraphOutputStyle, ...style };
+  // const paragraphStyle = config.disableDefaultStyle ? style : { ...paragraphOutputStyle, ...style };
   let content = null;
 
   if (typeof data === 'string') content = data;
   else if (typeof data === 'object' && data.text && typeof data.text === 'string') content = data.text;
 
-  return content ? <p style={ paragraphStyle } className={ classNames }>{ ReactHtmlParser(content) }</p> : '';
+  return content ? <p className={ classNames }>{ ReactHtmlParser(content) }</p> : '';
 };
 
 export default ParagraphOutput;

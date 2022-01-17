@@ -22,7 +22,6 @@ import tableOutputStyle from './style';
 const supportedKeys = ['table', 'tr', 'th', 'td'];
 
 const TableOutput = ({ data, tunes, style, classNames, config }) => {
-  console.log(data, style, classNames, config)
   if (!data) return '';
   if (!style || typeof style !== 'object') style = {};
   if (!config || typeof config !== 'object') config = {};
