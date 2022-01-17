@@ -41,6 +41,7 @@ const Output = ({ data, style, classNames, config, renderers }) => {
   if (!config || typeof config !== 'object') config = {};
   if (!renderers || typeof renderers !== 'object') renderers = {};
 
+  console.log('Output props: ', data, config);
   return data.blocks.map((block, i) => {
     let Renderer = null;
 
