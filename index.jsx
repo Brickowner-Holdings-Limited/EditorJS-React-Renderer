@@ -67,7 +67,7 @@ const Output = ({ data, style, classNames, config, renderers }) => {
         return <Renderer key={ i } data={ block.data } style={ style.embed || {}} config={ config.embed || {}} classNames={ classNames.embed || {}} />;
       case 'table':
         Renderer = renderers.table || TableOutput;
-        return <Renderer key={ i } data={ block.data } style={ style.table || {}} config={ config.table || {}} classNames={ classNames.table || {}} />;
+        return <Renderer key={ i } data={ block.data } tunes={ block.tunes || {}} style={ style.table || {}} config={ config.table || {}} classNames={ classNames.table || {}} />;
       case 'list':
         Renderer = renderers.list || ListOutput;
         return <Renderer key={ i } data={ block.data } style={ style.list || {}} config={ config.list || {}} classNames={ classNames.list || {}} />;

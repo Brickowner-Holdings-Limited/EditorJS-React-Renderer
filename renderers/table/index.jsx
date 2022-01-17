@@ -21,7 +21,7 @@ import tableOutputStyle from './style';
 
 const supportedKeys = ['table', 'tr', 'th', 'td'];
 
-const TableOutput = ({ data, style, classNames, config }) => {
+const TableOutput = ({ data, tunes, style, classNames, config }) => {
   console.log(data, style, classNames, config)
   if (!data) return '';
   if (!style || typeof style !== 'object') style = {};
@@ -42,8 +42,10 @@ const TableOutput = ({ data, style, classNames, config }) => {
   if (!Array.isArray(content) || content.length < 1) return '';
 
   const columnNames = content.shift();
+  const tunesClassName = Object.keys(tunes).filter(tune => Boolean(tunes[tune])).join(' ');
+  const tableClassName = [classNames.table, tunesClassName].join(' ');
 
-  return <table style={ tableStyle } className={ classNames.table }>
+  return <table style={ tableStyle } className={ tableClassName }>
     <thead>
       <tr style={ trStyle } className={ classNames.tr }>
         { columnNames.map((columnName, index) => <th key={ index } style={ thStyle } className={ classNames.th }>{ ReactHtmlParser(columnName) }</th>) }
