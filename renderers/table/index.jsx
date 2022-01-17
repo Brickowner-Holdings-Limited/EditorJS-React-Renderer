@@ -33,10 +33,10 @@ const TableOutput = ({ data, tunes, style, classNames, config }) => {
     if (!classNames[key] || typeof classNames[key] !== 'string') classNames[key] = '';
   });
 
-  const tableStyle = config.disableDefaultStyle ? style.table : { ...tableOutputStyle.table, ...style.table };
-  const trStyle = config.disableDefaultStyle ? style.tr : { ...tableOutputStyle.tr, ...style.tr };
-  const thStyle = config.disableDefaultStyle ? style.th : { ...tableOutputStyle.th, ...style.th };
-  const tdStyle = config.disableDefaultStyle ? style.td : { ...tableOutputStyle.td, ...style.td };
+  // const tableStyle = config.disableDefaultStyle ? style.table : { ...tableOutputStyle.table, ...style.table };
+  // const trStyle = config.disableDefaultStyle ? style.tr : { ...tableOutputStyle.tr, ...style.tr };
+  // const thStyle = config.disableDefaultStyle ? style.th : { ...tableOutputStyle.th, ...style.th };
+  // const tdStyle = config.disableDefaultStyle ? style.td : { ...tableOutputStyle.td, ...style.td };
 
   let content = data.content || [];
   if (!Array.isArray(content) || content.length < 1) return '';
@@ -45,19 +45,19 @@ const TableOutput = ({ data, tunes, style, classNames, config }) => {
   const tunesClassName = Object.keys(tunes).filter(tune => Boolean(tunes[tune])).join(' ');
   const tableClassName = [classNames.table, tunesClassName].join(' ');
 
-  return <table style={ tableStyle } className={ tableClassName }>
+  return <table className={ tableClassName }>
     <thead>
-      <tr style={ trStyle } className={ classNames.tr }>
-        { columnNames.map((columnName, index) => <th key={ index } style={ thStyle } className={ classNames.th }>{ ReactHtmlParser(columnName) }</th>) }
+      <tr className={ classNames.tr }>
+        { columnNames.map((columnName, index) => <th key={ index } className={ classNames.th }>{ ReactHtmlParser(columnName) }</th>) }
       </tr>
     </thead>
     <tbody>
       {
         content.map((row, index) => (
-          <tr key={ index } style={ config.disableDefaultStyle ? trStyle : { backgroundColor: index % 2 === 0 ? 'white' : '#f9f9f9', ...trStyle }} className={ classNames.tr }>
+          <tr key={ index } className={ classNames.tr }>
             {
               Array.isArray(row) && row.length > 1 &&
-              row.map((columnValue, i) => <td key={ i } style={ tdStyle } className={ classNames.td }>{ ReactHtmlParser(columnValue) }</td>)
+              row.map((columnValue, i) => <td key={ i } className={ classNames.td }>{ ReactHtmlParser(columnValue) }</td>)
             }
           </tr>
         ))
