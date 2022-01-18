@@ -40,7 +40,8 @@ const TableOutput = ({ data, tunes, style, classNames, config }) => {
   let content = data.content || [];
   if (!Array.isArray(content) || content.length < 1) return '';
 
-  const columnNames = content.shift();
+  const columnNames = content[0];
+  const tableContent = content.slice(1);
   const tunesClassName = Object.keys(tunes).filter(tune => Boolean(tunes[tune])).join(' ');
   const tableClassName = [classNames.table, tunesClassName].join(' ');
 
@@ -52,7 +53,7 @@ const TableOutput = ({ data, tunes, style, classNames, config }) => {
     </thead>
     <tbody>
       {
-        content.map((row, index) => (
+        tableContent.map((row, index) => (
           <tr key={ index } className={ classNames.tr }>
             {
               Array.isArray(row) && row.length > 1 &&
