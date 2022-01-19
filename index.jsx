@@ -150,7 +150,6 @@ const Output = ({ data, style, classNames, config, renderers }) => {
   if (!config || typeof config !== 'object') config = {};
   if (!renderers || typeof renderers !== 'object') renderers = {};
 
-  console.log('data', data);
   const tabList = useMemo(() => groupContentIntoTabs(data.blocks), [data.blocks]);
   const doContainTabs = Boolean(tabList);
   const renderedData = tabList ? {blocks: tabList} : data;

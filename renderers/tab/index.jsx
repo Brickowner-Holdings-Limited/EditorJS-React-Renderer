@@ -18,7 +18,6 @@ const TabOutput = ({ data, classNames }) => {
   if (!data) return '';
   if (!classNames || typeof classNames !== 'string') classNames = '';
 
-  console.log('TabOutputData:', data);
   let content = null;
 
   if (typeof data === 'object' && data.text && typeof data.text === 'string') content = data.text;

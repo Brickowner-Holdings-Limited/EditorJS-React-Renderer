@@ -41,16 +41,18 @@ const TableOutput = ({ data, tunes, style, classNames, config }) => {
   if (!Array.isArray(content) || content.length < 1) return '';
 
   const columnNames = content[0];
-  const tableContent = content.slice(1);
+  const tableContent = data.withHeadings ? content.slice(1) : content;
   const tunesClassName = Object.keys(tunes).filter(tune => Boolean(tunes[tune])).join(' ');
   const tableClassName = [classNames.table, tunesClassName].join(' ');
 
   return <table className={ tableClassName }>
-    <thead>
-      <tr className={ classNames.tr }>
-        { columnNames.map((columnName, index) => <th key={ index } className={ classNames.th }>{ ReactHtmlParser(columnName) }</th>) }
-      </tr>
-    </thead>
+    {data.withHeadings && (
+      <thead>
+        <tr className={classNames.tr}>
+          {columnNames.map((columnName, index) => <th key={index} className={classNames.th}>{ReactHtmlParser(columnName)}</th>)}
+        </tr>
+      </thead>
+    )}
     <tbody>
       {
         tableContent.map((row, index) => (

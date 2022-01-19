@@ -1,7 +1,8 @@
-import ParagraphOutput from './index';
+import TabOutput from './index';
 
-describe('ParagraphOutput renderer:', () => {
-	const paragraphOutput = shallow(<ParagraphOutput />);
+// this test going to fail
+describe('TabOutput renderer:', () => {
+	const paragraphOutput = shallow(<TabOutput />);
 
 	it('should match snapshot', () => expect(paragraphOutput).toMatchSnapshot());
 });
