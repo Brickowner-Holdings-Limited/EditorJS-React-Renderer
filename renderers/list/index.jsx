@@ -32,22 +32,22 @@ const ListOutput = ({ data, style, classNames, config }) => {
     if (!classNames[key] || typeof classNames[key] !== 'string') classNames[key] = '';
   });
 
-  const containerStyle = config.disableDefaultStyle ? style.container : { ...listOutputStyle.container, ...style.container };
-  const listItemStyle = config.disableDefaultStyle ? style.listItem : { ...listOutputStyle.listItem, ...style.listItem };
+  // const containerStyle = config.disableDefaultStyle ? style.container : { ...listOutputStyle.container, ...style.container };
+  // const listItemStyle = config.disableDefaultStyle ? style.listItem : { ...listOutputStyle.listItem, ...style.listItem };
   let content = [], listType = 'unordered';
 
   if (typeof data === 'string') content.push(data);
   else if (typeof data === 'object') {
     if (data.items && Array.isArray(data.items))
       content = data.items.map((item, index) =>
-        <li key={ index } style={ listItemStyle } className={ classNames.listItem }>{ ReactHtmlParser(item) }</li>);
+        <li key={ index } className={ classNames.listItem }>{ ReactHtmlParser(item) }</li>);
     if (data.style && validListStyles.includes(data.style)) listType = data.style;
   }
 
   if (content.length <= 0) return '';
-  if (listType === 'ordered') return <ol style={ containerStyle } className={ classNames.container }>{ content }</ol>;
+  if (listType === 'ordered') return <ol className={ classNames.container }>{ content }</ol>;
 
-  return <ul style={ containerStyle } className={ classNames.container }>{ content }</ul>;
+  return <ul className={ classNames.container }>{ content }</ul>;
 };
 
 export default ListOutput;
