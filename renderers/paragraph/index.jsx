@@ -14,9 +14,21 @@
 
 //#region imports
 import React from 'react';
-import ReactHtmlParser from 'react-html-parser';
+import ReactHtmlParser, {convertNodeToElement} from 'react-html-parser';
 import paragraphOutputStyle from './style';
 //#endregion
+
+const transformAnchor = (node, index) => {
+  if (node.type === 'tag' && node.name === 'a') {
+    node.attribs = {
+      ...node.attribs,
+      target: '_blank',
+      rel: 'noopener noreferrer'
+    }
+
+    return convertNodeToElement(node, index, transformAnchor);
+  }
+}
 
 const ParagraphOutput = ({ data, style, classNames, config }) => {
   if (!data) return '';
@@ -30,7 +42,7 @@ const ParagraphOutput = ({ data, style, classNames, config }) => {
   if (typeof data === 'string') content = data;
   else if (typeof data === 'object' && data.text && typeof data.text === 'string') content = data.text;
 
-  return content ? <p className={ classNames }>{ ReactHtmlParser(content) }</p> : '';
+  return content ? <p className={ classNames }>{ ReactHtmlParser(content, {transform: transformAnchor}) }</p> : '';
 };
 
 export default ParagraphOutput;
