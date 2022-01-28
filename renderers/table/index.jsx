@@ -41,31 +41,80 @@ const TableOutput = ({ data, tunes, style, classNames, config }) => {
   if (!Array.isArray(content) || content.length < 1) return '';
 
   const columnNames = content[0];
+  const hasMoreThanTwoColumns = columnNames.length > 2;
   const tableContent = data.withHeadings ? content.slice(1) : content;
   const tunesClassName = Object.keys(tunes).filter(tune => Boolean(tunes[tune])).join(' ');
   const tableClassName = [classNames.table, tunesClassName].join(' ');
+  const lastRowIndex = tableContent.length - 1;
 
-  return <table className={ tableClassName }>
-    {data.withHeadings && (
-      <thead>
-        <tr className={classNames.tr}>
-          {columnNames.map((columnName, index) => <th key={index} className={classNames.th}>{ReactHtmlParser(columnName)}</th>)}
-        </tr>
-      </thead>
-    )}
-    <tbody>
-      {
-        tableContent.map((row, index) => (
-          <tr key={ index } className={ classNames.tr }>
-            {
-              Array.isArray(row) && row.length > 1 &&
-              row.map((columnValue, i) => <td key={ i } className={ classNames.td }>{ ReactHtmlParser(columnValue) }</td>)
-            }
-          </tr>
-        ))
+  return (
+    <div className="tableContainer">
+      {hasMoreThanTwoColumns && (
+        tableContent.map((row, rowIndex) => {
+          const isLastRow = rowIndex === lastRowIndex;
+          const mobileTableClassname = `${classNames.table} mobileTable ${isLastRow ? tunesClassName : ''}`;
+
+          return (
+            <table key={`mobileTable${rowIndex}`} className={mobileTableClassname}>
+              <tbody>
+                {
+                  columnNames.map((columnName, colIndex) => {
+                    if (isLastRow) {
+                      if (row[colIndex].toLowerCase() === 'total') {
+                        return (
+                          <tr key={`mobileTR${colIndex}`} className={classNames.tr}>
+                            <td className={classNames.td}>{ReactHtmlParser('Total')}</td>
+                            <td className={classNames.td}/>
+                          </tr>
+                        )
+                      }
+                      if (row[colIndex]) {
+                        return (
+                          <tr key={`mobileTR${colIndex}`} className={classNames.tr}>
+                            <td className={classNames.td}>{ReactHtmlParser(columnName)}</td>
+                            <td className={classNames.td}>{ReactHtmlParser(row[colIndex])}</td>
+                          </tr>
+                        )
+                      }
+                      return;
+                    }
+
+                    return (
+                      <tr key={`mobileTR${colIndex}`} className={classNames.tr}>
+                        <td className={classNames.td}>{ReactHtmlParser(columnName)}</td>
+                        <td className={classNames.td}>{ReactHtmlParser(row[colIndex])}</td>
+                      </tr>
+                    )
+                  })
+                }
+              </tbody>
+            </table>
+          )
+        }))
       }
-    </tbody>
-  </table>;
+      <table className={`${tableClassName} desktopTable ${hasMoreThanTwoColumns ? 'hideOnMobile' : ''}`}>
+        {data.withHeadings && (
+          <thead>
+            <tr className={classNames.tr}>
+              {columnNames.map((columnName, index) => <th key={index} className={classNames.th}>{ReactHtmlParser(columnName)}</th>)}
+            </tr>
+          </thead>
+        )}
+        <tbody>
+          {
+            tableContent.map((row, index) => (
+              <tr key={ index } className={ classNames.tr }>
+                {
+                  Array.isArray(row) && row.length > 1 &&
+                  row.map((columnValue, i) => <td key={ i } className={ classNames.td }>{ ReactHtmlParser(columnValue) }</td>)
+                }
+              </tr>
+            ))
+          }
+        </tbody>
+      </table>
+    </div>
+  );
 };
 
 export default TableOutput;
